@@ -1,10 +1,10 @@
-/Vault.iml
-/target
-/.idea
-/.utility
-/lib
-license.txt
-dependency-reduced-pom.xml
+.idea
+.utility
+lib
+target
 .travis.yml
 build.xml
+dependency-reduced-pom.xml
+plugin.yml
 README.md
+Vault.iml

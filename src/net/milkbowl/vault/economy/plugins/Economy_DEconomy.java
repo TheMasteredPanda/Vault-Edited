@@ -35,6 +35,7 @@ public class Economy_DEconomy extends AbstractEconomy
 
     public Economy_DEconomy(Plugin plugin)
     {
+        System.out.println("Invoked Economy_DEconomy");
         this.plugin = plugin;
         Bukkit.getServer().getPluginManager().registerEvents(new Economy_DEconomy.EconomyServerListener(this), plugin);
 
@@ -46,10 +47,6 @@ public class Economy_DEconomy extends AbstractEconomy
                 logger.info(String.format("[%s][Economy] %s hooked.", plugin.getDescription().getName(), name));
             }
         }
-
-        this.bankManager = this.instance.getBankManager();
-        this.mainConfig = this.instance.getConfigManager().getMainConfig();
-
     }
 
     public class EconomyServerListener implements Listener
@@ -67,6 +64,8 @@ public class Economy_DEconomy extends AbstractEconomy
 
                 if (cex.getDescription().getName().equals(economy.name)) {
                     economy.instance = (DEconomy) cex;
+                    economy.bankManager = economy.instance.getBankManager();
+                    economy.mainConfig = economy.instance.getConfigManager().getMainConfig();
                     logger.info(String.format("[%s][Economy] %s hooked.", plugin.getDescription().getName(), economy.name));
                 }
             }
@@ -86,7 +85,7 @@ public class Economy_DEconomy extends AbstractEconomy
     @Override
     public boolean isEnabled()
     {
-        return this.instance.isEnabled();
+        return instance != null;
     }
 
     @Override
@@ -222,7 +221,7 @@ public class Economy_DEconomy extends AbstractEconomy
 
         BannedBankNamesConfig config = this.instance.getConfigManager().getBannedBankNamesConfig();
 
-        if (config.isBannedName(s1)) {
+        if (config.containsBannedWord(s1)) {
             return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Bank name " + s1 + " contains a banned word.");
         }
 

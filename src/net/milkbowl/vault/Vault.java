@@ -335,6 +335,7 @@ public class Vault extends JavaPlugin {
                 log.info(String.format("[Economy] %s found: %s", name, econ.isEnabled() ? "Loaded" : "Waiting"));
             }
         } catch (Exception e) {
+            e.printStackTrace();
             log.severe(String.format("[Economy] There was an error hooking %s - check to make sure you're using a compatible version!", name));
         }
     }

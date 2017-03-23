@@ -85,10 +85,10 @@ Vault currently supports the following: Permissions 3, PEX, GroupManager, bPerms
 		<dependency>
 			<groupId>net.dungeons</groupId>
 			<artifactId>DEconomy</artifactId>
-			<version>1.7.7</version>
+			<version>1.7.8</version>
 			<optional>true</optional>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/DEconomy-1.7.7.jar</systemPath>
+			<systemPath>${project.basedir}/lib/DEconomy-1.7.8.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.gmail.bleedobsidian.miconomy</groupId>

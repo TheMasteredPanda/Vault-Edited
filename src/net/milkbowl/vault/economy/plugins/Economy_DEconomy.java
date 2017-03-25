@@ -103,7 +103,7 @@ public class Economy_DEconomy extends AbstractEconomy
     @Override
     public int fractionalDigits()
     {
-        return -1;
+        return 1;
     }
 
     @Override
@@ -139,19 +139,19 @@ public class Economy_DEconomy extends AbstractEconomy
     @Override
     public double getBalance(String s)
     {
-        return Bukkit.getPlayer(s).getExp();
+        return Bukkit.getPlayer(s).getLevel();
     }
 
     @Override
     public double getBalance(String s, String s1)
     {
-        return Bukkit.getPlayer(s).getExp();
+        return Bukkit.getPlayer(s).getLevel();
     }
 
     @Override
     public boolean has(String s, double v)
     {
-        return Bukkit.getPlayer(s).getExp() >= v;
+        return Bukkit.getPlayer(s).getLevel() >= v;
     }
 
     @Override
@@ -165,12 +165,12 @@ public class Economy_DEconomy extends AbstractEconomy
     {
         Player player = Bukkit.getPlayer(s);
 
-        if (player.getExp() < v) {
+        if (player.getLevel() < v) {
             return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Player " + s + " does not have enough money to withdraw " + this.format(v) + ".");
         }
 
-        player.setExp((float) (player.getExp() - v));
-        return new EconomyResponse(v, player.getExp(), EconomyResponse.ResponseType.SUCCESS, "Successfully withdrew " + this.format(v) + ".");
+        player.setLevel((int) (player.getLevel() - v));
+        return new EconomyResponse(v, player.getLevel(), EconomyResponse.ResponseType.SUCCESS, "Successfully withdrew " + this.format(v) + ".");
     }
 
     @Override
@@ -178,28 +178,28 @@ public class Economy_DEconomy extends AbstractEconomy
     {
         Player player = Bukkit.getPlayer(s);
 
-        if (player.getExp() < v) {
+        if (player.getLevel() < v) {
             return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Player " + s + " does not have enough money to withdraw " + this.format(v) + ".");
         }
 
-        player.setExp((float) (player.getExp() - v));
-        return new EconomyResponse(v, player.getExp(), EconomyResponse.ResponseType.SUCCESS, "Successfully withdrew " + this.format(v) + ".");
+        player.setLevel((int) (player.getLevel() - v));
+        return new EconomyResponse(v, player.getLevel(), EconomyResponse.ResponseType.SUCCESS, "Successfully withdrew " + this.format(v) + ".");
     }
 
     @Override
     public EconomyResponse depositPlayer(String s, double v)
     {
         Player player = Bukkit.getPlayer(s);
-        player.setExp((float) (player.getExp() + v));
-        return new EconomyResponse(v, player.getExp(), EconomyResponse.ResponseType.SUCCESS, "Successfully deposited " + this.format(v) + ".");
+        player.setLevel((int) (player.getLevel() + v));
+        return new EconomyResponse(v, player.getLevel(), EconomyResponse.ResponseType.SUCCESS, "Successfully deposited " + this.format(v) + ".");
     }
 
     @Override
     public EconomyResponse depositPlayer(String s, String s1, double v)
     {
         Player player = Bukkit.getPlayer(s);
-        player.setExp((float) (player.getExp() + v));
-        return new EconomyResponse(v, player.getExp(), EconomyResponse.ResponseType.SUCCESS, "Successfully deposited " + this.format(v) + ".");
+        player.setLevel((int) (player.getLevel() + v));
+        return new EconomyResponse(v, player.getLevel(), EconomyResponse.ResponseType.SUCCESS, "Successfully deposited " + this.format(v) + ".");
     }
 
     @Override

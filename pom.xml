@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -65,11 +66,12 @@ Vault currently supports the following: Permissions 3, PEX, GroupManager, bPerms
 			<id>greatman-repo</id>
 			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
 		</repository>
-		<repository>
+	<!--	<repository>
 			<id>escapecraft-repo</id>
 			<url>http://dev.escapecraft.com/maven</url>
-		</repository>
+		</repository> -->
 	</repositories>
+
 
 	<dependencies>
         <dependency>
@@ -85,10 +87,10 @@ Vault currently supports the following: Permissions 3, PEX, GroupManager, bPerms
 		<dependency>
 			<groupId>net.dungeons</groupId>
 			<artifactId>DEconomy</artifactId>
-			<version>1.7.8</version>
+			<version>1.8.2</version>
 			<optional>true</optional>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/DEconomy-1.7.8.jar</systemPath>
+			<systemPath>${project.basedir}/lib/DEconomy-1.8.2.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.gmail.bleedobsidian.miconomy</groupId>

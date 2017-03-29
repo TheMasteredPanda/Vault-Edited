@@ -3,7 +3,6 @@ package net.milkbowl.vault.economy.plugins;
 import net.dungeons.DEconomy;
 import net.dungeons.bank.BankEntry;
 import net.dungeons.bank.BankManager;
-import net.dungeons.config.BannedBankNamesConfig;
 import net.dungeons.config.MainConfig;
 import net.milkbowl.vault.economy.AbstractEconomy;
 import net.milkbowl.vault.economy.EconomyResponse;
@@ -206,27 +205,26 @@ public class Economy_DEconomy extends AbstractEconomy
     public EconomyResponse createBank(String s, String s1)
     {
         if (this.bankManager == null) {
+            System.out.println("BankManager is null.");
             return this.bankManagerNotLoadedResponse;
         }
+        Player player = Bukkit.getPlayer(s1);
 
-        Player player = Bukkit.getPlayer(s);
+        List<BankEntry> bankEntries = this.bankManager.getBanksOwnedBy(player.getUniqueId());
 
-        List<BankEntry> banksOwned = this.bankManager.getBanksOwnedBy(player.getUniqueId());
+        if (bankEntries != null) {
+            for (BankEntry entry : bankEntries) {
+                System.out.println("In for loop.");
 
-        for (BankEntry entry : banksOwned) {
-            if (entry.getName().endsWith(s1)) {
-                return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Player already owns an account named " + s + ".");
+                if (entry.getName().endsWith(s1)) {
+                    System.out.println("Entry:" + entry.getName() + " Requested Name: " + s);
+                    return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Player already owns an account named " + s + ".");
+                }
             }
         }
 
-        BannedBankNamesConfig config = this.instance.getConfigManager().getBannedBankNamesConfig();
-
-        if (config.containsBannedWord(s1)) {
-            return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Bank name " + s1 + " contains a banned word.");
-        }
-
-        this.bankManager.createBank(player.getUniqueId(), s1, player.isOnline());
-        return new EconomyResponse(0, 0, EconomyResponse.ResponseType.SUCCESS, "Successfully made bank " + s1 + ".");
+        this.bankManager.createBank(player.getUniqueId(), s);
+        return new EconomyResponse(0, 0, EconomyResponse.ResponseType.SUCCESS, "Successfully made bank " + s + ".");
     }
 
     @Override
@@ -294,8 +292,10 @@ public class Economy_DEconomy extends AbstractEconomy
         }
 
         BankEntry entry = this.bankManager.getBankEntry(s);
+        this.instance.debug("isBankOwner(" + s + ", " + s1 + ") : BankEntry is: " + entry);
 
         if (!entry.getOwner().equals(Bukkit.getPlayer(s1).getUniqueId())) {
+            this.instance.debug("isBankOwner(" + s + ", " + s1 + ") : Player is not the owner of bank.");
             return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Player " + s1 + " is not the owner of bank " + s + ".");
         }
 
@@ -311,7 +311,8 @@ public class Economy_DEconomy extends AbstractEconomy
 
         BankEntry entry = this.bankManager.getBankEntry(s);
 
-        if (!entry.getMembers().contains(Bukkit.getPlayer(s1).getUniqueId())) {
+        if (!entry.getMembers().contains(Bukkit.getPlayer(s1).getUniqueId()) && this.isBankOwner(s, Bukkit.getPlayer(entry.getOwner())).type == EconomyResponse.ResponseType.FAILURE) {
+            this.instance.debug("isBankMember(" + s + ", " + s1 + ") : Player is not the a member of bank.");
             return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Player " + s1 + " is not a member of bank " + s + ".");
         }
 
